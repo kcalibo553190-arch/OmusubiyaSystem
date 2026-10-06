@@ -14,6 +14,12 @@ import java.util.List;
  * Data is held in memory (mock list) since this build is not yet
  * connected to the database -- swap loadMockData()/save actions for
  * real DAO calls against the `customers` table later.
+ *
+ * CRUD buttons:
+ *   Create -> Add
+ *   Read   -> Refresh (reload list) + live Search + row selection
+ *   Update -> Update
+ *   Delete -> Delete  (Clear just resets the form)
  */
 public class CustomerManagementUI extends JFrame {
 
@@ -32,8 +38,8 @@ public class CustomerManagementUI extends JFrame {
     public CustomerManagementUI() {
         UITheme.applyGlobalDefaults();
         setTitle("Customer Management - Rice Ball Shop");
-        setSize(980, 620);
-        setMinimumSize(new Dimension(860, 560));
+        setSize(980, 660);
+        setMinimumSize(new Dimension(860, 600));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setBackground(UITheme.BACKGROUND);
@@ -106,10 +112,11 @@ public class CustomerManagementUI extends JFrame {
         txtAddress = addTextArea(panel, "Address");
         txtUsername = addField(panel, "Username");
         txtPassword = new JPasswordField();
-        addLabeledComponent(panel, "Password", txtPassword);
+        addLabeledComponent(panel, "Password (leave blank to keep current)", txtPassword);
 
         panel.add(Box.createRigidArea(new Dimension(0, 14)));
 
+        // ---- CRUD buttons ----
         JPanel buttons = new JPanel(new GridLayout(2, 2, 8, 8));
         buttons.setBackground(UITheme.BACKGROUND);
         buttons.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -128,7 +135,17 @@ public class CustomerManagementUI extends JFrame {
         buttons.add(btnUpdate);
         buttons.add(btnDelete);
         buttons.add(btnClear);
+        buttons.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
         panel.add(buttons);
+
+        panel.add(Box.createRigidArea(new Dimension(0, 8)));
+
+        // Read / reload
+        JButton btnRefresh = UITheme.secondaryButton("Refresh List");
+        btnRefresh.setAlignmentX(Component.LEFT_ALIGNMENT);
+        btnRefresh.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
+        btnRefresh.addActionListener(e -> refreshAll());
+        panel.add(btnRefresh);
 
         JPanel outer = new JPanel(new BorderLayout());
         outer.setBackground(UITheme.BACKGROUND);
@@ -197,6 +214,13 @@ public class CustomerManagementUI extends JFrame {
                 });
             }
         }
+    }
+
+    /** READ: clears the search box and form, then reloads the full list. */
+    private void refreshAll() {
+        txtSearch.setText("");   // triggers a refresh via the document listener
+        clearForm();
+        refreshTable(null);      // explicit call in case the search box was already empty
     }
 
     private Customer getSelectedCustomer() {
