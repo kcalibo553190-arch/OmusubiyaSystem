@@ -1,0 +1,9 @@
+# Omusubiya menu  -  name,category,price (VAT-inclusive, in pesos),image
+# image = file name inside the images/ folder (.jpg / .png). Leave blank to use the item name,
+# e.g. "Salmon Onigiri" -> images/salmon-onigiri.jpg
+name,category,price,image
+Salmon Onigiri,Onigiri,55.00,salmon-onigiri
+Tuna Mayo Onigiri,Onigiri,50.00,tuna-mayo-onigiri
+Umeboshi Onigiri,Onigiri,40.00,umeboshi-onigiri
+Katsuobushi Onigiri,Onigiri,45.00,katsuobushi-onigiri
+Iced Tea,Drinks,35.00,iced-tea
