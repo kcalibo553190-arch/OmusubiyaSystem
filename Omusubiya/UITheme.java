@@ -5,20 +5,20 @@ import java.awt.*;
 
 /**
  * Shared visual theme for the Rice Ball Shop system.
- * Background : #FFFFFF (white)
- * Foreground/Accent : #C62B3B (rice-ball red)
+ * Background : #FCD204 (yellow)
+ * Foreground/Accent : #000000 (black)
  */
 public class UITheme {
 
-    public static final Color BACKGROUND   = Color.decode("#FFFFFF");
-    public static final Color ACCENT       = Color.decode("#C62B3B");
-    public static final Color ACCENT_DARK  = Color.decode("#A32230");
-    public static final Color ACCENT_LIGHT = Color.decode("#F6D9DC");
-    public static final Color TEXT_ON_ACCENT = Color.WHITE;
-    public static final Color TEXT_DARK    = new Color(45, 45, 45);
-    public static final Color TABLE_ALT_ROW = new Color(253, 238, 239);
-    public static final Color LOW_STOCK_ROW = new Color(255, 198, 203);
-    public static final Color BORDER_COLOR = Color.decode("#C62B3B");
+    public static final Color BACKGROUND   = Color.decode("#FCD204");
+    public static final Color ACCENT       = Color.decode("#000000");
+    public static final Color ACCENT_DARK  = Color.decode("#000000");
+    public static final Color ACCENT_LIGHT = Color.decode("#FFE766");
+    public static final Color TEXT_ON_ACCENT = Color.decode("#FCD204");
+    public static final Color TEXT_DARK    = Color.decode("#000000");
+    public static final Color TABLE_ALT_ROW = new Color(255, 249, 214);
+    public static final Color LOW_STOCK_ROW = Color.decode("#F2C200");
+    public static final Color BORDER_COLOR = Color.decode("#000000");
 
     public static final Font FONT_TITLE  = new Font("Segoe UI", Font.BOLD, 22);
     public static final Font FONT_SUBTITLE = new Font("Segoe UI", Font.PLAIN, 13);
@@ -43,12 +43,13 @@ public class UITheme {
     /** Secondary (outline-style) button for less prominent actions. */
     public static JButton secondaryButton(String text) {
         JButton b = new JButton(text);
-        b.setBackground(Color.WHITE);
+        b.setBackground(BACKGROUND);
         b.setForeground(ACCENT);
         b.setFont(FONT_HEADER);
         b.setFocusPainted(false);
         b.setOpaque(true);
-        b.setBorder(BorderFactory.createLineBorder(ACCENT, 2));
+        b.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(ACCENT, 2), new EmptyBorder(7, 16, 7, 16)));
         b.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return b;
     }
@@ -83,6 +84,8 @@ public class UITheme {
     /** Applies consistent styling to a JTable. */
     public static void styleTable(JTable table) {
         table.setRowHeight(26);
+        table.setFillsViewportHeight(true);
+        table.setBackground(Color.WHITE);
         table.setFont(FONT_BODY);
         table.setSelectionBackground(ACCENT_LIGHT);
         table.setSelectionForeground(TEXT_DARK);
